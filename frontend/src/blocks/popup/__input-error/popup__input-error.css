@@ -1,0 +1,17 @@
+.popup__input-error{
+    visibility: hidden;
+    color: red;
+    font-size: 12px;
+    line-height: 15px;
+    padding: 0;
+    width: 238px;
+    height: 30px;
+    margin-bottom: 5px;
+}
+
+@media screen and (min-width: 768px) {
+    .popup__input-error{
+        width: 282px;
+        margin-bottom: 13px;
+    }
+  }

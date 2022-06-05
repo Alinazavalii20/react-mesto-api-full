@@ -1,0 +1,11 @@
+.element{
+    width: 281px;
+    min-height: 361px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-radius: 10px;
+    background-color: white;
+    position: relative;
+    cursor: pointer;
+}

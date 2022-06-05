@@ -1,0 +1,17 @@
+.element__button-like{
+    background-color: white;
+    justify-content: center;
+    width: 22px;
+    height: 19px;
+    margin-right: 20px;
+    margin-top: 32px;
+    padding: 0;
+}
+
+.element__button-like:active{
+    background-image: url(../../../image/plus__active.png);
+}
+
+.element__button-like:focus{
+    background-image: url(../../../image/plus__active.png);
+}

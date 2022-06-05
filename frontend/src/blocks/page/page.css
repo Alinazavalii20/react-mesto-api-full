@@ -1,0 +1,28 @@
+.page{
+    background-color: #000000;
+    color: #FFFFFF;
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
+    max-width: 880px;
+}
+
+body{
+    background-color: #000000;
+}
+
+@media screen and (min-width: 768px) {
+    .page{
+        padding: 45px 50px 60px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .page{
+        margin: auto;
+        padding: 45px 200px 60px;
+    }   
+}

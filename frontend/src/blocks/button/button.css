@@ -1,0 +1,6 @@
+.button{
+    background-color: rgba(0, 0, 0, 1);
+    border: solid white 1px;
+    justify-content: center;
+    cursor: pointer;
+}

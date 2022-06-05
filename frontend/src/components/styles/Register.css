@@ -1,0 +1,110 @@
+/* inter-regular - latin */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  src:
+   url(../../vendor/fonts/Inter-Regular.woff2) format('woff2'),
+   url(../../vendor/fonts/Inter-Regular.woff) format('woff'); /* Modern Browsers */
+}
+/* inter-900 - latin */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 900;
+  src:
+    url(../../vendor/fonts/Inter-Black.woff2) format('woff2'), /* Super Modern Browsers */
+    url(../../vendor/fonts/Inter-Black.woff) format('woff'); /* Modern Browsers */
+}
+
+/* inter-500 - latin */
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter Medium'), local('Inter-Medium'),
+    url(../../vendor/fonts/Inter-Medium.woff2) format('woff2'),
+    url(../../vendor/fonts/Inter-Medium.woff) format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Inter';
+}
+
+.register__welcome{
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+}
+
+.register__form{
+  display: flex;
+  flex-direction: column;
+  width: 358px;
+  margin: 50px auto 15px;
+}
+
+.register__input{
+  background-color: transparent;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #CCCCCC;
+  padding: 0 0 13px;
+  font-size: 14px;
+  height: 17px;
+  margin-bottom: 30px;
+  color: #FFFFFF;
+}
+
+.register__input:nth-child(2){
+  margin-bottom: 0;
+}
+
+.register__button{
+  width: 358px;
+  height: 50px;
+  border: none;
+  background-color: #FFFFFF;
+  border-radius: 2px;
+  text-align: center;
+  color: black;
+  font-size: 16px;
+  line-height: 19px;
+  margin-top: 216px;
+}
+
+.register__button:hover{
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.register__signin{
+  justify-content: center;
+  margin: auto;
+  width: 358px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #FFFFFF;
+  font-style: normal;
+  font-weight: normal;
+}
+
+
+.register__login-link{
+  margin-left: 5px;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.register__login-link:hover{
+  opacity: 0.6;
+  cursor: pointer;
+}

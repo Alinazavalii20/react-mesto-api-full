@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
@@ -18,12 +19,19 @@ const { PORT = 3000 } = process.env;
 
 app.use(cookieParser());
 app.use(express.json());
+console.log(process.env.NODE_ENV);
 
 mongoose.connect('mongodb://localhost:27017/mestodb', () => {
   console.log('Connect to mydb');
 });
 
 app.use(requestLogger);
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({

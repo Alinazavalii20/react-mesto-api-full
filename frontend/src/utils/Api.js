@@ -85,9 +85,9 @@ export default class Api {
 }
 
 const api = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-30',
+  url: 'https://api.alina.nomoreparties.sbs',
   headers: {
-    authorization: '0d0c1ecf-4cb6-4add-84fe-013c8fefdb82',
+    authorization: '4621fa51-2207-4893-bbd7-a334248403b6',
     'Content-Type' : 'application/json'
   }
 })

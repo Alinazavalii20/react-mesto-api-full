@@ -87,7 +87,6 @@ export default class Api {
 const api = new Api({
   url: 'https://api.alina.nomoreparties.sbs',
   headers: {
-    authorization: '4621fa51-2207-4893-bbd7-a334248403b6',
     'Content-Type' : 'application/json'
   }
 })

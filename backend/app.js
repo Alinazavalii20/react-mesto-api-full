@@ -17,7 +17,7 @@ const { login } = require('./controllers/users');
 const { creatUser } = require('./controllers/users');
 
 const app = express();
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 
 app.use(cors({
   origin: 'https://alina.nomoreparties.sbs',

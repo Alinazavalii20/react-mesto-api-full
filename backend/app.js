@@ -1,8 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { celebrate, errors, Joi } = require('celebrate');
+const cors = require('cors');
 
 const auth = require('./middlewares/auth');
 const userRouter = require('./routes/users');
@@ -17,6 +19,12 @@ const { creatUser } = require('./controllers/users');
 const app = express();
 const { PORT = 3001 } = process.env;
 
+app.use(cors({
+  origin: 'https://alina.nomoreparties.sbs',
+  credentials: true,
+}));
+
+app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.json());
 console.log(process.env.NODE_ENV);

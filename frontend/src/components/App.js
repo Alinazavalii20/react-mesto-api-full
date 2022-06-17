@@ -43,10 +43,10 @@ function App() {
   const [isInfoTooltipOpen, setisInfoTooltipOpen] = useState(false);
 
   const onRegister = (email, password) => {
-    auth
-      .register(email, password)
+    auth.register(email, password)
       .then(() => {
         setisInfoTooltipOpen(true)
+        navigate("/singin")
       })
       .catch((err) => {
         setInfoTooltipStatus(true);
@@ -55,18 +55,20 @@ function App() {
   }
 
   const onLogin = (email, password) => {
-    auth
-      .authorize(email, password)
-      .then((data) => {
+    auth.authorize(email, password)
+      .then((token) => {
+        window.location.reload();
         if (!email || !password) {
           return;
         }
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("jwt", token);
         setLoggedIn(true);
         auth
-          .checkToken(localStorage.getItem("token")).then((res) => {
-            if (res) {
-              setUserEmail(res.data.email);
+          .checkToken(
+            localStorage.getItem("jwt"))
+            .then((data) => {
+            if (data) {
+              setUserEmail(data.email);
             }
             navigate("/");
           });
@@ -79,26 +81,29 @@ function App() {
   }
 
   function onSignOut() {
-    localStorage.removeItem("token");
+    localStorage.removeItem("jwt");
     setLoggedIn(false);
     setUserEmail("");
     navigate("/signin");
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleTokenCheck = () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("jwt");
     if (token) {
       auth
         .checkToken(token)
-        .then((res) => {
-          if (res) {
-            setUserEmail(res.data.email);
+        .then((data) => {
+          if (data) {
+            setUserEmail(data.email);
             setLoggedIn(true);
+            api.setTokenHeaders(token);
             navigate('/');
           }
         })
         .catch((err) => {
           console.log(err);
+          localStorage.removeItem("jwt");
         });
     }
   };
@@ -108,14 +113,16 @@ function App() {
       .then(([userData, cards]) => {
         setCurrentUser(userData);
         setCards(cards);
+        console.log(userData);
+        console.log(cards);
       })
       .catch((err) => console.log("ошибка получения данных: " + err));
 
-  }, []);
+  }, [loggedIn]);
 
   useEffect(() => {
     handleTokenCheck()
-  }, []);
+  }, [handleTokenCheck]);
 
   useEffect(() => {
     function closePopupEsp(evt) {

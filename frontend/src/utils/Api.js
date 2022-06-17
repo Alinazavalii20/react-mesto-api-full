@@ -8,6 +8,14 @@ export default class Api {
         this._headers = headers;
     }
 
+    // Установка токена в заголовки
+    setTokenHeaders(token) {
+      this._headers = {
+        ...this._headers,
+        'Authorization': `Bearer ${token}`,
+      };
+    }
+
     //получение карточек
     getAllCards(){
         return fetch(`${this._url}/cards`,{
@@ -85,9 +93,9 @@ export default class Api {
 }
 
 const api = new Api({
-  url: 'https://api.alina.nomoreparties.sbs',
+  url: 'http://localhost:4000',
   headers: {
-    'Content-Type' : 'application/json'
+    'Content-Type' : 'application/json',
   }
 })
 

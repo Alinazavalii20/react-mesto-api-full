@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
+/* const cookieParser = require('cookie-parser'); */
 const { celebrate, errors, Joi } = require('celebrate');
 const cors = require('cors');
 
@@ -16,26 +16,33 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { login } = require('./controllers/users');
 const { creatUser } = require('./controllers/users');
 
+const { PORT = 4000, BASE_PATH } = process.env;
 const app = express();
-const { PORT = 3001 } = process.env;
 
-app.use(cors({
-  origin: 'https://alina.nomoreparties.sbs',
+app.use(requestLogger);
+app.use(express.json());
+
+const CORS_CONFIG = {
   credentials: true,
-}));
+  origin: [
+    'http://localhost:3000',
+  ],
+  method: ['GET,HEAD,PUT,PATCH,POST,DELETE'],
+  preflightContinue: false,
+  optionsSuccessStatus: 200,
+};
+app.options('*', cors());
+app.use(cors(CORS_CONFIG));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cookieParser());
-app.use(express.json());
+/* app.use(cookieParser()); */
 console.log(process.env.NODE_ENV);
 
 mongoose.connect('mongodb://localhost:27017/mestodb', () => {
   console.log('Connect to mydb');
 });
-
-app.use(requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -73,4 +80,5 @@ app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`server listening on port ${PORT}`);
+  console.log(BASE_PATH);
 });

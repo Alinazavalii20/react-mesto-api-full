@@ -1,10 +1,29 @@
+const { NODE_ENV, JWT_SECRET } = process.env;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
 const User = require('../models/user');
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
 const UnAuthtorizeError = require('../errors/UnAuthtorizeError');
+
+module.exports.login = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  return User.findUserByCredentials(email, password)
+    .then((user) => {
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        { expiresIn: '7d' },
+      );
+      res.send({ token });
+    })
+    .catch((err) => {
+      next(new UnAuthtorizeError(err.message));
+    });
+};
 
 module.exports.getUsers = async (req, res, next) => {
   User.find({})
@@ -18,7 +37,7 @@ module.exports.getUser = async (req, res, next) => {
       if (!user) {
         next(new NotFoundError('Пользователь не найден'));
       }
-      res.status(200).send({ data: user });
+      res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -58,7 +77,9 @@ module.exports.creatUser = async (req, res, next) => {
       name, about, avatar, email, password: hash,
     }))
     .then(() => res.status(200).send({
-      name, about, avatar, email,
+      data: {
+        name, about, avatar, email,
+      },
     }))
     .catch((err) => {
       if (err.code === 11000) {
@@ -118,28 +139,5 @@ module.exports.patchUsersAvatar = async (req, res, next) => {
       }
 
       next(err);
-    });
-};
-
-module.exports.login = async (req, res, next) => {
-  const { email, password } = req.body;
-
-  return User.findUserByCredentials(email, password)
-    .then((user) => {
-      const token = jwt.sign(
-        { _id: user._id },
-        'super-secret-key',
-        { expiresIn: '7d' },
-      );
-
-      res.cookie('jwt', token, {
-        httpOnly: true,
-        maxAge: 3600000 * 24 * 7,
-      });
-
-      res.send({ token });
-    })
-    .catch((err) => {
-      next(new UnAuthtorizeError(err.message));
     });
 };

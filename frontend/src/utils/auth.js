@@ -11,10 +11,10 @@ export const register = ( email, password ) => {
     return fetch(`${BASE_URL}/signup`, {
         method: 'POST',
         headers: {
-            Accept: 'application/json',
+            'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ password, email })
+        body: JSON.stringify({ email, password })
     })
         .then(getResponse)
 };
@@ -23,10 +23,10 @@ export const authorize = ( email, password ) => {
     return fetch(`${BASE_URL}/signin`, {
         method: 'POST',
         headers: {
-            Accept: 'application/json',
+            'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ password, email })
+        body: JSON.stringify({ email, password })
     })
         .then(getResponse)
         .then((data) => {
@@ -35,12 +35,11 @@ export const authorize = ( email, password ) => {
         })
 };
 
-export const checkToken = (token) => {
+export const checkToken = () => {
     return fetch(`${BASE_URL}/users/me`, {
         method: 'GET',
         headers: {
-            ...this._headers,
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem('jwt')}`,
           },
     })
         .then(getResponse)

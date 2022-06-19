@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Route,
   Routes,
@@ -56,12 +56,10 @@ function App() {
 
   const onLogin = (email, password) => {
     auth.authorize(email, password)
-      .then((token) => {
-        window.location.reload();
+      .then(() => {
         if (!email || !password) {
           return;
         }
-        localStorage.setItem("jwt", token);
         setLoggedIn(true);
         auth
           .checkToken(
@@ -97,7 +95,6 @@ function App() {
           if (data) {
             setUserEmail(data.email);
             setLoggedIn(true);
-            api.setTokenHeaders(token);
             navigate('/');
           }
         })
@@ -109,18 +106,19 @@ function App() {
   };
 
   useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getAllCards()])
+    if(loggedIn) {
+      Promise.all([api.getUserInfo(), api.getAllCards()])
       .then(([userData, cards]) => {
         setCurrentUser(userData);
-        setCards(cards);
+        setCards(cards.data);
         console.log(userData);
         console.log(cards);
       })
       .catch((err) => console.log("ошибка получения данных: " + err));
-
+    }
   }, [loggedIn]);
 
-  useEffect(() => {
+  useCallback(() => {
     handleTokenCheck()
   }, [handleTokenCheck]);
 
@@ -165,19 +163,19 @@ function App() {
     setSelectCard({ open: true, dataCard: data });
   }
 
-  function handleUpdateUser(data) {
-    api.editUser(data)
-      .then((newData) => {
-        setCurrentUser(newData)
+  function handleUpdateUser(user) {
+    api.editUser(user.name, user.about)
+      .then((user) => {
+        setCurrentUser(user)
         closeAllPopups()
       })
       .catch((err) => console.log(err))
   }
 
-  function handleUpdateAvatar(data) {
-    api.updateAvatar(data)
-      .then((newData) => {
-        setCurrentUser(newData)
+  function handleUpdateAvatar({avatar}) {
+    api.updateAvatar(avatar)
+      .then(() => {
+        setCurrentUser({ ...currentUser, avatar })
         closeAllPopups()
       })
       .catch((err) => console.log("ошибка аватара: " + err))

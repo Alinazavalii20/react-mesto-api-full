@@ -3,17 +3,16 @@ function onResponce(res){
 }
 
 export default class Api {
-    constructor({url, headers}){
+    constructor({url}){
         this._url = url;
-        this._headers = headers;
+        //this._headers = headers;
     }
 
-    // Установка токена в заголовки
-    setTokenHeaders(token) {
-      this._headers = {
-        ...this._headers,
-        'Authorization': `Bearer ${token}`,
-      };
+    get _headers() {
+      return {
+        'Content-Type' : 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`, 
+      }
     }
 
     //получение карточек
@@ -93,10 +92,7 @@ export default class Api {
 }
 
 const api = new Api({
-  url: 'http://localhost:4000',
-  headers: {
-    'Content-Type' : 'application/json',
-  }
+  url: 'http://localhost:4000'
 })
 
 export {api}

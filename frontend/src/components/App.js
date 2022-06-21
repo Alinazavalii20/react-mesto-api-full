@@ -108,10 +108,10 @@ function App() {
   useEffect(() => {
     if(loggedIn) {
       Promise.all([api.getUserInfo(), api.getAllCards()])
-      .then(([userData, cards]) => {
-        setCurrentUser(userData);
-        setCards(cards.data);
-        console.log(userData);
+      .then(([user, cards]) => {
+        setCurrentUser(user);
+        setCards(cards);
+        console.log(user);
         console.log(cards);
       })
       .catch((err) => console.log("ошибка получения данных: " + err));
@@ -190,19 +190,19 @@ function App() {
       .catch((err) => console.log(err))
   }
 
-  function handleCardDelete(data) {
-    api.deleteCard(data._id)
-      .then(setCards((cards) => cards.filter((c) => c._id !== data._id ),
+  function handleCardDelete(id) {
+    api.deleteCard(id)
+      .then(setCards((cards) => cards.filter((card) => id !== card._id ),
         closeAllPopups()))
       .catch((err) => console.log(err))
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
 
     api.setLike(card._id, !isLiked)
       .then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        setCards((cards) => cards.map((c) => c._id === card._id ? newCard.data : c));
       })
       .catch(err => console.log(err));
   }

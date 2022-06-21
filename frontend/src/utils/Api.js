@@ -34,8 +34,8 @@ export default class Api {
     }
 
     //поставить лайк
-    setLike(cardId) {
-        return fetch(`${this._url}/cards/likes/${cardId}`, {
+    setLike(id) {
+        return fetch(`${this._url}/cards/${id}/likes`, {
             method: 'PUT',
             headers: this._headers,
          })
@@ -43,8 +43,8 @@ export default class Api {
       }
 
     // Удаление лайка
-    deleteLike(cardId) {
-        return fetch(`${this._url}/cards/likes/${cardId}`, {
+    deleteLike(id) {
+        return fetch(`${this._url}/cards/${id}/likes`, {
           method: 'DELETE',
           headers: this._headers,
         })
@@ -53,17 +53,17 @@ export default class Api {
 
 
     //Редактирование профиля
-    editUser(data){
+    editUser(name, about){
         return fetch(`${this._url}/users/me`,{
           method: 'PATCH',
           headers: this._headers,
-          body: JSON.stringify(data),
+          body: JSON.stringify({name, about}),
         })
            .then(onResponce)
     }
 
     //Обновление аватара пользователя
-    updateAvatar({avatar}){
+    updateAvatar(avatar){
       return fetch(`${this._url}/users/me/avatar`, {
         method: 'PATCH',
         headers: this._headers,
@@ -82,8 +82,8 @@ export default class Api {
            .then(onResponce)
     }
 
-    deleteCard(cardId){
-        return fetch(`${this._url}/cards/${cardId}`,{
+    deleteCard(id){
+        return fetch(`${this._url}/cards/${id}`,{
             method: 'DELETE',
             headers: this._headers,
          })

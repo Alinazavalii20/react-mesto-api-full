@@ -103,7 +103,7 @@ module.exports.patchUser = async (req, res, next) => {
       upsert: false,
     },
   )
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send({ user }))
     // eslint-disable-next-line consistent-return
     .catch((err) => {
       if (err.name === 'ValidationError') {

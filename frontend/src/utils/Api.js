@@ -53,11 +53,14 @@ export default class Api {
 
 
     //Редактирование профиля
-    editUser(name, about){
+    editUser(user){
         return fetch(`${this._url}/users/me`,{
           method: 'PATCH',
           headers: this._headers,
-          body: JSON.stringify({name, about}),
+          body: JSON.stringify({
+            name: user.name,
+            about: user.about
+        }),
         })
            .then(onResponce)
     }

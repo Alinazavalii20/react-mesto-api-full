@@ -163,10 +163,10 @@ function App() {
     setSelectCard({ open: true, dataCard: data });
   }
 
-  function handleUpdateUser(user) {
-    api.editUser(user.name, user.about)
-      .then((user) => {
-        setCurrentUser(user)
+  function handleUpdateUser({name, about}) {
+    api.editUser(name, about)
+      .then(() => {
+        setCurrentUser({ ...currentUser, name, about })
         closeAllPopups()
       })
       .catch((err) => console.log(err))
@@ -192,8 +192,11 @@ function App() {
 
   function handleCardDelete(id) {
     api.deleteCard(id)
-      .then(setCards((cards) => cards.filter((card) => id !== card._id ),
-        closeAllPopups()))
+    .then (() => {
+      setCards((cards) => cards.filter((card) => id !== card._id ))
+      closeAllPopups()
+    })
+      //.then(setCards((cards) => cards.filter((card) => cardId !== card._id ),//))
       .catch((err) => console.log(err))
   }
 

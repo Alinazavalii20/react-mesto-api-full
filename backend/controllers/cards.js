@@ -5,7 +5,7 @@ const ForbiddenError = require('../errors/ForbiddenError');
 
 exports.getCards = async (req, res, next) => {
   Card.find({})
-    .then((cards) => { res.send({ data: cards }); })
+    .then((cards) => { res.send(cards); })
     .catch(next);
 };
 
@@ -13,7 +13,7 @@ exports.postCards = async (req, res, next) => {
   const { name, link } = req.body;
   const owner = req.user._id;
   Card.create({ name, link, owner })
-    .then((card) => res.send({ data: card }))
+    .then((card) => res.send(card))
     // eslint-disable-next-line consistent-return
     .catch((err) => {
       if (err.name === 'ValidationError') {

@@ -4,5 +4,7 @@
 Пожалуйста, прикрепите в это описание ссылку на сайт, размещенный на Яндекс.Облаке.
 
 **Публичный IP-адрес сервера:** 84.201.154.207
+
 **Frontend** https://alina.nomoreparties.sbs
+
 **Backend** https://api.alina.nomoreparties.sbs

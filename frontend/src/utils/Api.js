@@ -51,6 +51,14 @@ export default class Api {
         .then(onResponce);
       }
 
+    //Статус лайка на карточке
+    cardLikeStatus(id, isLiked) {
+      if (isLiked === true) {
+        return this.deleteLike(id)
+      } else {
+        return this.setLike(id)
+      }
+    }
 
     //Редактирование профиля
     editUser(user){

@@ -42,6 +42,8 @@ function App() {
   const [infoTooltipStatus, setInfoTooltipStatus] = useState(false);
   const [isInfoTooltipOpen, setisInfoTooltipOpen] = useState(false);
 
+  const [cardToDelete, setCardToDelete] = useState([]);
+
   const onRegister = (email, password) => {
     auth.register(email, password)
       .then(() => {
@@ -146,7 +148,8 @@ function App() {
     setIsEditAvatarPopupOpen(true)
   }
 
-  function handleDeletePopup() {
+  function handleDeletePopup(id) {
+    setCardToDelete(id);
     setDeleteCard(true);
   }
 
@@ -190,20 +193,19 @@ function App() {
       .catch((err) => console.log(err))
   }
 
-  function handleCardDelete(id) {
-    api.deleteCard(id)
-    .then (() => {
-      setCards((cards) => cards.filter((card) => id !== card._id ))
-      closeAllPopups()
+  function handleCardDelete() {
+    api.deleteCard(cardToDelete._id)
+      .then (() => {
+        setCards((cards) => cards.filter((c) => c._id !== cardToDelete._id))
+        closeAllPopups()
     })
-      //.then(setCards((cards) => cards.filter((card) => cardId !== card._id ),//))
       .catch((err) => console.log(err))
   }
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i === currentUser._id);
 
-    api.setLike(card._id, !isLiked)
+    api.cardLikeStatus(card._id, isLiked)
       .then((newCard) => {
         setCards((cards) => cards.map((c) => c._id === card._id ? newCard.data : c));
       })

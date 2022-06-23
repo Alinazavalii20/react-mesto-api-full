@@ -103,7 +103,7 @@ export default class Api {
 }
 
 const api = new Api({
-  url: 'http://api.alina.nomoreparties.sbs'
+  url: 'https://api.alina.nomoreparties.sbs'
 })
 
 export {api}

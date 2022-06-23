@@ -25,7 +25,7 @@ app.use(express.json());
 const CORS_CONFIG = {
   credentials: true,
   origin: [
-    'http://localhost:3000',
+    'https://alina.nomoreparties.sbs',
   ],
   method: ['GET,HEAD,PUT,PATCH,POST,DELETE'],
   preflightContinue: false,

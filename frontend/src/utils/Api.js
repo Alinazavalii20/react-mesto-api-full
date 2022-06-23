@@ -103,7 +103,7 @@ export default class Api {
 }
 
 const api = new Api({
-  url: 'http://localhost:4000'
+  url: 'http://api.alina.nomoreparties.sbs'
 })
 
 export {api}
